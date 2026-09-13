@@ -6,6 +6,7 @@ Hỗ trợ Native Tool Calling và chuyển đổi linh hoạt qua biến môi t
 import os
 import sys
 import json
+import re
 from typing import Dict, Any, List
 from dotenv import load_dotenv
 
@@ -32,32 +33,112 @@ class MockOfflineProvider(BaseLLMProvider):
         self.model_name = "Offline-Mock-Model-2026"
 
     def generate(self, prompt: str, system_prompt: str = "") -> str:
-        return f"[Mock Chatbot Response]: Xin chào! Tôi đã nhận được câu hỏi '{prompt}'. (Chế độ Chatbot không có Tool tra cứu dữ liệu thời gian thực)."
+        return (
+            f"[Mock Chatbot Response]: Tôi đã nhận được câu hỏi '{prompt}'. "
+            "(Chế độ Chatbot không có Tool tra cứu tiêu chí hoặc gửi thư mời phỏng vấn.)"
+        )
 
     def generate_with_tools(self, prompt: str, tools_schema: List[Dict[str, Any]], system_prompt: str = "") -> Dict[str, Any]:
         prompt_lower = prompt.lower()
-        
-        # Mô phỏng nhận diện intent gọi Tool
-        if "sv2026001" in prompt_lower and "đặt lịch" in prompt_lower:
-            return {
-                "type": "tool_call",
-                "tool_name": "schedule_appointment",
-                "arguments": {"student_id": "SV2026001", "datetime_str": "14:00 15/09/2026", "advisor_name": "PGS.TS Nguyễn Văn A"},
-                "thought": "Người dùng yêu cầu đặt lịch hẹn tư vấn cho sinh viên SV2026001. Tôi sẽ gọi tool schedule_appointment."
-            }
-        elif "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
-            return {
-                "type": "tool_call",
-                "tool_name": "academic_query",
-                "arguments": {"student_id": "SV2026001"},
-                "thought": "Người dùng muốn tra cứu thông tin học vụ của sinh viên SV2026001. Tôi sẽ gọi tool academic_query."
-            }
+
+        original_prompt = prompt.split("MCP_OBSERVATION", 1)[0]
+        original_lower = original_prompt.lower()
+        if "ai engineer" in original_lower:
+            position_title = "AI Engineer"
+        elif "product designer" in original_lower:
+            position_title = "Product Designer"
         else:
+            position_title = "Data Analyst"
+        required_skills = (
+            ("python", "machine learning", "docker")
+            if position_title == "AI Engineer"
+            else ("sql", "python", "power bi")
+        )
+        candidate_match = re.search(r"ứng viên\s*:\s*([^,\n]+)", original_prompt, re.IGNORECASE)
+        candidate_name = candidate_match.group(1).strip() if candidate_match else "Nguyễn Minh Anh"
+        email_match = re.search(r"[\w.+-]+@[\w.-]+\.\w+", original_prompt)
+        email = email_match.group(0) if email_match else "minh.anh@example.com"
+        datetime_match = re.search(r"\d{1,2}:\d{2}\s+\d{1,2}/\d{1,2}/\d{4}", original_prompt)
+        datetime_str = datetime_match.group(0) if datetime_match else "14:00 15/09/2026"
+        interviewer_match = re.search(
+            r"người phỏng vấn\s*:\s*([^,\n]+)",
+            original_prompt,
+            re.IGNORECASE,
+        )
+        interviewer_name = (
+            interviewer_match.group(1).strip().rstrip(".,;")
+            if interviewer_match
+            else "Trần Quốc B"
+        )
+
+        # Mô phỏng lượt suy luận sau khi Agent đã nhận Observation từ MCP Server.
+        if "mcp_observation" in prompt_lower:
+            if '"tool": "send_interview_notification"' in prompt:
+                return {
+                    "type": "text",
+                    "content": "CV đáp ứng tiêu chí bắt buộc và thư mời phỏng vấn đã được gửi thành công.",
+                    "thought": "Đã nhận xác nhận gửi thư từ MCP Server, có thể trả lời người dùng."
+                }
+            if '"status": "NOT_FOUND"' in prompt:
+                return {
+                    "type": "text",
+                    "content": "Không tìm thấy tiêu chí của vị trí được yêu cầu, nên chưa thể sàng lọc CV.",
+                    "thought": "Observation trả về NOT_FOUND; cần phản hồi chính xác và không suy diễn."
+                }
+            if '"tool": "job_criteria_query"' in prompt:
+                if "sàng lọc" not in original_lower:
+                    return {
+                        "type": "text",
+                        "content": (
+                            f"Đã tra cứu tiêu chí tuyển dụng cho vị trí {position_title}. "
+                            "Bạn có thể cung cấp CV để tiếp tục sàng lọc."
+                        ),
+                        "thought": "Người dùng chỉ yêu cầu tiêu chí, nên trả lời từ Observation mà không gửi thư mời."
+                    }
+                missing_skills = [
+                    skill for skill in required_skills if skill not in original_lower
+                ]
+                if missing_skills:
+                    return {
+                        "type": "text",
+                        "content": (
+                            "CV chưa đáp ứng đầy đủ tiêu chí bắt buộc cho vị trí "
+                            f"{position_title}: còn thiếu {', '.join(missing_skills)}. "
+                            "Chưa gửi thư mời phỏng vấn."
+                        ),
+                        "thought": "Đã đối chiếu CV với tiêu chí; ứng viên chưa đạt nên không gọi tool gửi thư."
+                    }
+                return {
+                    "type": "tool_call",
+                    "tool_name": "send_interview_notification",
+                    "arguments": {
+                        "candidate_name": candidate_name,
+                        "email": email,
+                        "position_title": position_title,
+                        "datetime_str": datetime_str,
+                        "interviewer_name": interviewer_name,
+                    },
+                    "thought": "CV đáp ứng toàn bộ kỹ năng bắt buộc; tiếp tục gửi thư mời phỏng vấn."
+                }
+
+        # Ở lượt đầu, mọi yêu cầu sàng lọc hoặc tra cứu vị trí đều phải lấy tiêu chí trước.
+        if (
+            "data analyst" in prompt_lower
+            or "ai engineer" in prompt_lower
+            or "sàng lọc" in prompt_lower
+            or "tiêu chí" in prompt_lower
+        ):
             return {
-                "type": "text",
-                "content": f"[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-                "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool."
+                "type": "tool_call",
+                "tool_name": "job_criteria_query",
+                "arguments": {"position_title": position_title},
+                "thought": "Cần tra cứu tiêu chí chính thức của vị trí trước khi đánh giá CV."
             }
+        return {
+            "type": "text",
+            "content": "[Mock Agent Response]: Hãy cho tôi biết vị trí ứng tuyển hoặc cung cấp CV để bắt đầu sàng lọc.",
+            "thought": "Câu hỏi chung, chưa cần gọi Tool."
+        }
 
 
 class GeminiProvider(BaseLLMProvider):

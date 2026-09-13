@@ -1,8 +1,8 @@
 # 📊 BÁO CÁO THU HOẠCH NGHIỆM THU BÀI LAB 3 (BƯỚC 3 — SUBMISSION ARTIFACT)
 
-> **Họ và Tên Học viên:** [Điền Họ và Tên]  
-> **Mã Sinh Viên / Mã Học viên:** [Điền MSSV]  
-> **Chủ đề Lựa chọn:** [Điền tên chủ đề đã chọn từ docs/DANH_SACH_DE_TAI.md hoặc Đề tài Mở]  
+> **Họ và Tên Học viên:** Đinh Văn Hùng
+> **Mã Sinh Viên / Mã Học viên:** 2A202602443
+> **Chủ đề Lựa chọn:** Trợ lý Tuyển dụng & Sàng lọc CV
 
 ---
 
@@ -10,11 +10,11 @@
 
 | Tiêu chí Đánh giá | Mức độ (1 - 5) | Giải trình chi tiết lý do chọn điểm |
 | :--- | :---: | :--- |
-| **1. Multi-step Reasoning** | / 5 | Bài toán có yêu cầu chia nhỏ nhiều bước suy luận nối tiếp nhau không? |
-| **2. Tool Interaction** | / 5 | Hệ thống có cần kết nối với MCP Server / Cơ sở dữ liệu bên ngoài không? |
-| **3. Dynamic Decision** | / 5 | Bước tiếp theo có phụ thuộc vào kết quả quan sát bước trước không? |
-| **4. Long Horizon Goal** | / 5 | Hệ thống có phải giữ mục tiêu xuyên suốt qua nhiều lượt xử lý không? |
-| **TỔNG ĐIỂM AGENTIC FIT** | **/ 20** | *Nếu tổng điểm > 12/20: Bài toán rất phù hợp triển khai Agentic System.* |
+| **1. Multi-step Reasoning** | 5 / 5 | Agent phải tra cứu tiêu chí tuyển dụng, đối chiếu CV, rồi mới quyết định có gửi lịch phỏng vấn hay không. |
+| **2. Tool Interaction** | 5 / 5 | Hệ thống cần MCP Server để tra cứu tiêu chí vị trí và gửi thông báo lịch phỏng vấn. |
+| **3. Dynamic Decision** | 5 / 5 | Việc gửi lịch phụ thuộc vào tiêu chí trả về từ tool và mức độ phù hợp của CV ứng viên. |
+| **4. Long Horizon Goal** | 4 / 5 | Agent giữ mục tiêu sàng lọc ứng viên xuyên suốt các bước, nhưng chưa cần lưu trạng thái dài hạn giữa các phiên chat. |
+| **TỔNG ĐIỂM AGENTIC FIT** | **19 / 20** | *Bài toán phù hợp triển khai Agentic System.* |
 
 ---
 

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Bạn có thể cho tôi biết một CV tốt cần có những phần nào không?",
+    "expected_behavior": "Agent trả lời trực tiếp bằng kiến thức chung, không gọi Tool.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Data Analyst.",
+    "expected_behavior": "Agent gọi 'job_criteria_query' với position_title là 'Data Analyst', sau đó tóm tắt tiêu chí.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "appointment_booking",
+    "question": "Ứng viên: Nguyễn Minh Anh, email minh.anh@example.com, ứng tuyển Data Analyst. CV có 2 năm kinh nghiệm phân tích dữ liệu, tốt nghiệp đại học chuyên ngành phù hợp và có SQL, Python, Power BI. Hãy sàng lọc và gửi lịch phỏng vấn lúc 14:00 15/09/2026. Người phỏng vấn: Trần Quốc B.",
+    "expected_behavior": "Agent tra cứu tiêu chí, xác nhận CV đủ kỹ năng, kinh nghiệm và học vấn rồi gọi 'send_interview_notification'.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Ứng viên: Lê Quang Minh, email quang.minh@example.com, ứng tuyển AI Engineer. CV có 3 năm kinh nghiệm xây dựng hệ thống AI/ML, tốt nghiệp đại học chuyên ngành CNTT và có Python, Machine Learning, Docker. Hãy sàng lọc và gửi lịch phỏng vấn lúc 09:00 16/09/2026. Người phỏng vấn: Phạm Gia C.",
+    "expected_behavior": "Agent thực hiện ReAct đa bước: tra cứu tiêu chí AI Engineer, đối chiếu kỹ năng, kinh nghiệm và học vấn, sau đó gửi thư mời phỏng vấn.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Product Designer.",
+    "expected_behavior": "Agent nhận kết quả NOT_FOUND và giải thích rằng chưa có tiêu chí cho vị trí này, không bịa đặt thông tin.",
+    "complexity": "Medium"
+  }
+]

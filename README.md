@@ -41,6 +41,13 @@ cp config/test_cases.example.json config/test_cases.json
 python src/app.py --all
 ```
 
+### Demo giao diện web cục bộ
+```bash
+python src/web_demo.py
+```
+
+Sau đó mở trình duyệt tại `http://127.0.0.1:8000`. Giao diện hiển thị câu trả lời cuối cùng và Waterfall Trace của luồng ReAct. Nhấn `Ctrl+C` trong Terminal để dừng.
+
 **Kỳ vọng Output màn hình:**
 ```text
 ✅ [MOCK OFFLINE MODE PASS]: Môi trường đã sẵn sàng! 
