@@ -1,6 +1,50 @@
 [
   {
     "step": 1,
+    "query": "Bạn có thể cho tôi biết một CV tốt cần có những phần nào không?",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Một CV tốt thường cần có những phần sau:\n\n1. **Thông tin cá nhân:** Bao gồm họ tên, địa chỉ, số điện thoại và email.\n2. **Mục tiêu nghề nghiệp:** Một đoạn ngắn gọn mô tả mục tiêu nghề nghiệp của bạn.\n3. **Kinh nghiệm làm việc:** Liệt kê các công việc trước đây, bao gồm tên công ty, vị trí, và thời gian làm việc.\n4. **Học vấn:** Thông tin về trình độ học vấn, tên trường, chuyên ngành và thời gian học.\n5. **Kỹ năng:** Liệt kê các kỹ năng chuyên môn và mềm mà bạn sở hữu.\n6. **Chứng chỉ và khóa học:** Các chứng chỉ liên quan đến công việc hoặc khóa học bạn đã hoàn thành.\n7. **Dự án hoặc thành tựu:** Các dự án nổi bật hoặc thành tựu đáng chú ý trong sự nghiệp.\n\nNgoài ra, bạn có thể thêm các phần khác như sở thích hoặc hoạt động ngoại khóa nếu thấy cần thiết để làm nổi bật cá nhân của mình.",
+    "latency_ms": 5087.11
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Data Analyst.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "job_criteria_query",
+    "arguments": {
+      "position_title": "Data Analyst"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "position_title": "Data Analyst",
+      "data": {
+        "minimum_experience_years": 1,
+        "required_skills": [
+          "SQL",
+          "Python",
+          "Power BI"
+        ],
+        "preferred_skills": [
+          "Statistics",
+          "Tableau"
+        ],
+        "education": "Đại học chuyên ngành phù hợp hoặc kinh nghiệm tương đương",
+        "summary": "Phân tích dữ liệu, xây dựng dashboard và trình bày insight cho các bên liên quan."
+      }
+    },
+    "latency_ms": 1293.31
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Data Analyst.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Tôi đã tra cứu thành công tiêu chí tuyển dụng cho vị trí Data Analyst. Dưới đây là các thông tin chi tiết:\n\n- **Kinh nghiệm tối thiểu**: 1 năm\n- **Kỹ năng bắt buộc**: SQL, Python, Power BI\n- **Kỹ năng ưu tiên**: Statistics, Tableau\n- **Trình độ học vấn**: Đại học chuyên ngành phù hợp hoặc kinh nghiệm tương đương\n- **Tóm tắt công việc**: Phân tích dữ liệu, xây dựng dashboard và trình bày insight cho các bên liên quan.\n\nNếu bạn có CV của ứng viên và muốn sàng lọc, vui lòng cung cấp thông tin chi tiết về ứng viên để tôi có thể kiểm tra xem họ có đủ điều kiện mời phỏng vấn hay không.",
+    "latency_ms": 1788.03
+  },
+  {
+    "step": 1,
     "query": "Ứng viên: Nguyễn Minh Anh, email minh.anh@example.com, ứng tuyển Data Analyst. CV có 2 năm kinh nghiệm phân tích dữ liệu, tốt nghiệp đại học chuyên ngành phù hợp và có SQL, Python, Power BI. Hãy sàng lọc và gửi lịch phỏng vấn lúc 14:00 15/09/2026. Người phỏng vấn: Trần Quốc B.",
     "action_type": "TOOL_EXECUTION",
     "tool_name": "job_criteria_query",
@@ -25,7 +69,7 @@
         "summary": "Phân tích dữ liệu, xây dựng dashboard và trình bày insight cho các bên liên quan."
       }
     },
-    "latency_ms": 1045.05
+    "latency_ms": 2196.43
   },
   {
     "step": 2,
@@ -49,14 +93,96 @@
       "interviewer_name": "Trần Quốc B.",
       "message": "Đã gửi thư mời phỏng vấn vị trí Data Analyst cho Nguyễn Minh Anh (minh.anh@example.com) vào lúc 14:00 15/09/2026 với Trần Quốc B.."
     },
-    "latency_ms": 2805.98
+    "latency_ms": 2648.89
   },
   {
     "step": 3,
     "query": "Ứng viên: Nguyễn Minh Anh, email minh.anh@example.com, ứng tuyển Data Analyst. CV có 2 năm kinh nghiệm phân tích dữ liệu, tốt nghiệp đại học chuyên ngành phù hợp và có SQL, Python, Power BI. Hãy sàng lọc và gửi lịch phỏng vấn lúc 14:00 15/09/2026. Người phỏng vấn: Trần Quốc B.",
     "action_type": "FINAL_ANSWER",
     "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
-    "output": "Đã gửi thư mời phỏng vấn vị trí Data Analyst cho Nguyễn Minh Anh (minh.anh@example.com) vào lúc 14:00 15/09/2026 với Trần Quốc B..",
-    "latency_ms": 1434.97
+    "output": "Thư mời phỏng vấn đã được gửi thành công cho ứng viên Nguyễn Minh Anh (email: minh.anh@example.com) vào lúc 14:00 ngày 15/09/2026 với người phỏng vấn là Trần Quốc B.",
+    "latency_ms": 2673.28
+  },
+  {
+    "step": 1,
+    "query": "Ứng viên: Lê Quang Minh, email quang.minh@example.com, ứng tuyển AI Engineer. CV có 3 năm kinh nghiệm xây dựng hệ thống AI/ML, tốt nghiệp đại học chuyên ngành CNTT và có Python, Machine Learning, Docker. Hãy sàng lọc và gửi lịch phỏng vấn lúc 09:00 16/09/2026. Người phỏng vấn: Phạm Gia C.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "job_criteria_query",
+    "arguments": {
+      "position_title": "AI Engineer"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "position_title": "AI Engineer",
+      "data": {
+        "minimum_experience_years": 2,
+        "required_skills": [
+          "Python",
+          "Machine Learning",
+          "Docker"
+        ],
+        "preferred_skills": [
+          "MLOps",
+          "Cloud"
+        ],
+        "education": "Đại học chuyên ngành CNTT, AI hoặc tương đương",
+        "summary": "Xây dựng, triển khai và vận hành các hệ thống AI/ML."
+      }
+    },
+    "latency_ms": 1245.43
+  },
+  {
+    "step": 2,
+    "query": "Ứng viên: Lê Quang Minh, email quang.minh@example.com, ứng tuyển AI Engineer. CV có 3 năm kinh nghiệm xây dựng hệ thống AI/ML, tốt nghiệp đại học chuyên ngành CNTT và có Python, Machine Learning, Docker. Hãy sàng lọc và gửi lịch phỏng vấn lúc 09:00 16/09/2026. Người phỏng vấn: Phạm Gia C.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "send_interview_notification",
+    "arguments": {
+      "candidate_name": "Lê Quang Minh",
+      "email": "quang.minh@example.com",
+      "position_title": "AI Engineer",
+      "datetime_str": "09:00 16/09/2026",
+      "interviewer_name": "Phạm Gia C."
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "notification_id": "INT-LÊQUANGMINH-01",
+      "candidate_name": "Lê Quang Minh",
+      "email": "quang.minh@example.com",
+      "position_title": "AI Engineer",
+      "datetime": "09:00 16/09/2026",
+      "interviewer_name": "Phạm Gia C.",
+      "message": "Đã gửi thư mời phỏng vấn vị trí AI Engineer cho Lê Quang Minh (quang.minh@example.com) vào lúc 09:00 16/09/2026 với Phạm Gia C.."
+    },
+    "latency_ms": 2612.04
+  },
+  {
+    "step": 3,
+    "query": "Ứng viên: Lê Quang Minh, email quang.minh@example.com, ứng tuyển AI Engineer. CV có 3 năm kinh nghiệm xây dựng hệ thống AI/ML, tốt nghiệp đại học chuyên ngành CNTT và có Python, Machine Learning, Docker. Hãy sàng lọc và gửi lịch phỏng vấn lúc 09:00 16/09/2026. Người phỏng vấn: Phạm Gia C.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Đã gửi thư mời phỏng vấn vị trí AI Engineer cho Lê Quang Minh (quang.minh@example.com) vào lúc 09:00 16/09/2026 với Phạm Gia C..",
+    "latency_ms": 1220.25
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Product Designer.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "job_criteria_query",
+    "arguments": {
+      "position_title": "Product Designer"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy tiêu chí tuyển dụng cho vị trí 'Product Designer'"
+    },
+    "latency_ms": 1244.75
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu tiêu chí tuyển dụng cho vị trí Product Designer.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "OpenAI phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Không có tiêu chí tuyển dụng được tìm thấy cho vị trí \"Product Designer\". Vì vậy, tôi không thể tiến hành sàng lọc CV hoặc cung cấp thêm thông tin liên quan đến vị trí này. Bạn có thể kiểm tra lại vị trí tuyển dụng hoặc cung cấp một vị trí khác mà bạn muốn tra cứu.",
+    "latency_ms": 3337.35
   }
 ]
